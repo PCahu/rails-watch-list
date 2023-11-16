@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <h1><%= @list.name %></h1>
+      <table class="table table-bordered">
+        <tbody>
+        </tbody>
+      </table>
+
+      <div class="list-group">
+        <% @list.bookmarks.each do |bookmark| %>
+          <li class="list-group-item">
+            <p><%= bookmark.movie %></p>
+            <p><%= bookmark.comment %></p>
+            <%= link_to "Delete",
+            bookmark_path(bookmark),
+            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+            %>
+          </li>
+        <% end %>
+      </div>
+
+      <%= simple_form_for [@list, @bookmark] do |f| %>
+        <%= f.input :movie, collection: @movies %>
+        <%= f.input :comment %>
+        <%= f.submit class: 'btn btn-primary' %>
+      <% end %>
+      <%= link_to "See all lists", lists_path %>
+    </div>
+  </div>
+</div>
