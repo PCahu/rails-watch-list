@@ -4,20 +4,34 @@
       <h1><%= @list.name %></h1>
       <table class="table table-bordered">
         <tbody>
+        <% if @list.photo.attached? %>
+          <%= cl_image_tag @list.photo.key, width: 100 %>
+        <% else %>
+          <img src="https://res.cloudinary.com/dzdwtvpza/image/upload/v1700195105/kpi6t6a1cfobfdghody5.jpg" width="10px">
+        <% end %>
+
         </tbody>
       </table>
 
       <div class="list-group">
-        <% @list.bookmarks.each do |bookmark| %>
-          <li class="list-group-item">
-            <p><%= bookmark.movie %></p>
-            <p><%= bookmark.comment %></p>
-            <%= link_to "Delete",
-            bookmark_path(bookmark),
-            data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
-            %>
-          </li>
-        <% end %>
+        <div class="row">
+          <% @list.bookmarks.each do |bookmark| %>
+
+              <div class="card m-2" style="width: 15rem">
+                <%= image_tag "#{bookmark.movie.poster_url}", alt: "Le Wagon"%>
+                <div class="card-body">
+                  <strong><%= bookmark.movie.title %></strong>
+                  <p class="card-text"><%= bookmark.comment %></p>
+                  <%= link_to "Delete",
+                  bookmark_path(bookmark),
+                  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}
+                  %>
+                </div>
+              </div>
+
+            <br>
+          <% end %>
+        </div>
       </div>
 
       <%= simple_form_for [@list, @bookmark] do |f| %>

@@ -1,0 +1,6 @@
+<p> <%= "Edit the list '#{list.name}'" %> </p>
+<%= simple_form_for @list do |f| %>
+        <%= f.input :name %>
+        <%= f.input :photo, as: :file %>
+        <%= f.submit class: 'btn btn-primary' %>
+      <% end %>
